@@ -37,6 +37,8 @@ consumer.Received += (sender, e) =>
     Console.WriteLine(message);
 
     channel.BasicAck(e.DeliveryTag, multiple: false);// false verilirse sadece bu mesaj için onay verir.True ise budan onceki mesajlar için de onay verir.
+
+    channel.BasicNack(deliveryTag: e.DeliveryTag, multiple: false, requeue: true); // RabitMqQ ya bilgi verebilir ve mesajı tekrardan işletebiliriz.Requeue parametresi true olursa mesaj işlenmek üzere tekrardn gonderilecek.Eger false olursa sadece mesajın işlenmedigi bilgisi RabbitMQ ' ya bildirilir.
 };
 
 
